@@ -81,9 +81,9 @@ test "utils - vector complexify \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var c = try Vector(C).init(allocator, 2);
         var r = try Vector(R).init(allocator, 2);
         var i = try Vector(R).init(allocator, 2);
+        var c = try Vector(C).init(allocator, 2);
 
         r.val[0] = 1.2;
         r.val[1] = 5.6;
@@ -109,9 +109,9 @@ test "utils - matrix complexify \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var c = try Matrix(C).init(allocator, 2, 2);
         var r = try Matrix(R).init(allocator, 2, 2);
         var i = try Matrix(R).init(allocator, 2, 2);
+        var c = try Matrix(C).init(allocator, 2, 2);
 
         r.val[0] = 1.2;
         r.val[1] = 2.3;

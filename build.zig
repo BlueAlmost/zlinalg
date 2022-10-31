@@ -37,13 +37,15 @@ const Target = struct {
         const mode = b.standardReleaseOptions();
 
         var exe = b.addExecutable(self.name, self.src);
+        exe.setOutputDir(b.pathFromRoot("./bin"));
+
+
         exe.setBuildMode(b.standardReleaseOptions());
         // exe.setTarget(target);
         exe.setBuildMode(mode);
 
         exe.addPackagePath("zlinalg", "zlinalg.zig");
         
-        exe.setOutputDir("bin");
         exe.install();
 
         const run_cmd = exe.run();
