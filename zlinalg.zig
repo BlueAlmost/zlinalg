@@ -6,12 +6,7 @@ pub const Matrix  = @import("src/matrix.zig").Matrix; // general matrix struct i
 
 // utilities
 const utils = @import("src/utils.zig");
-pub const splitifyVector    = utils.splitifyVector;
-pub const splitifyMatrix    = utils.splitifyMatrix;
-
-pub const complexifyVector  = utils.complexifyVector;
-pub const complexifyMatrix  = utils.complexifyMatrix;
-
-pub const copyVector        = utils.copyVector;
-pub const copyMatrix        = utils.copyMatrix;
+pub const splitify   = utils.splitify;
+pub const complexify = utils.complexify;
+pub const copy       = utils.copy;
 

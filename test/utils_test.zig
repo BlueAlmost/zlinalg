@@ -7,16 +7,13 @@ const Complex = std.math.Complex;
 const Vector = zlinalg.Vector;
 const Matrix = zlinalg.Matrix;
 
-const splitifyVector   = zlinalg.splitifyVector;
-const splitifyMatrix   = zlinalg.splitifyMatrix;
-const complexifyVector = zlinalg.complexifyVector;
-const complexifyMatrix = zlinalg.complexifyMatrix;
-const copyVector       = zlinalg.copyVector;
-const copyMatrix       = zlinalg.copyMatrix;
+const splitify   = zlinalg.splitify;
+const complexify = zlinalg.complexify;
+const copy       = zlinalg.copy;
 
 const eps = 1e-6;
 
-test "utils - vector splitify \n" {
+test "utils - splitify for vector inputs\n" {
     inline for (.{f32, f64}) |R| {
         comptime var C: type = Complex(R);
         
@@ -30,7 +27,7 @@ test "utils - vector splitify \n" {
         c.val[0] = C.init(1.2, 3.4);
         c.val[1] = C.init(5.6, 7.8);
 
-        try splitifyVector(R, c, r, i);
+        try splitify(c, r, i);
 
         try std.testing.expectApproxEqAbs(r.val[0], 1.2, eps);
         try std.testing.expectApproxEqAbs(r.val[1], 5.6, eps);
@@ -41,7 +38,7 @@ test "utils - vector splitify \n" {
 }
 
 
-test "utils - matrix splitify \n" {
+test "utils - splitify for matrix inputs\n" {
     inline for (.{f32, f64}) |R| {
         comptime var C: type = Complex(R);
         
@@ -57,7 +54,7 @@ test "utils - matrix splitify \n" {
         c.val[2] = C.init(-1.2, -3.4);
         c.val[3] = C.init(-5.6, -7.8);
 
-        try splitifyMatrix(R, c, r, i);
+        try splitify(c, r, i);
 
         try std.testing.expectApproxEqAbs(r.val[0], 1.2, eps);
         try std.testing.expectApproxEqAbs(r.val[1], 5.6, eps);
@@ -73,7 +70,7 @@ test "utils - matrix splitify \n" {
 
 
 
-test "utils - vector complexify \n" {
+test "utils - complexify for vector input\n" {
     inline for (.{f32, f64}) |R| {
         comptime var C: type = Complex(R);
         
@@ -90,7 +87,7 @@ test "utils - vector complexify \n" {
         i.val[0] = 3.4;
         i.val[1] = 7.8;
 
-        try complexifyVector(R, c, r, i);
+        try complexify(c, r, i);
 
         try std.testing.expectApproxEqAbs(c.val[0].re, 1.2, eps);
         try std.testing.expectApproxEqAbs(c.val[1].re, 5.6, eps);
@@ -101,7 +98,7 @@ test "utils - vector complexify \n" {
 }
 
 
-test "utils - matrix complexify \n" {
+test "utils - complexify for matrix input \n" {
     inline for (.{f32, f64}) |R| {
         comptime var C: type = Complex(R);
         
@@ -123,7 +120,7 @@ test "utils - matrix complexify \n" {
         i.val[2] = -3.4;
         i.val[3] = -4.5;
 
-        try complexifyMatrix(R, c, r, i);
+        try complexify(c, r, i);
 
         try std.testing.expectApproxEqAbs(c.val[0].re, 1.2, eps);
         try std.testing.expectApproxEqAbs(c.val[1].re, 2.3, eps);
@@ -138,7 +135,7 @@ test "utils - matrix complexify \n" {
 }
 
 
-test "utils - real vector copy \n" {
+test "utils - copy for real vector \n" {
     inline for (.{f32, f64}) |R| {
         
         var arena = std.heap.ArenaAllocator.init(std.testing.allocator);
@@ -151,13 +148,15 @@ test "utils - real vector copy \n" {
         x.val[0] = 1.2;
         x.val[1] = 5.6;
 
-        try copyVector(R, x, y);
+        try copy(x, y);
 
         try std.testing.expectApproxEqAbs(y.val[0], 1.2, eps);
         try std.testing.expectApproxEqAbs(y.val[1], 5.6, eps);
     }
 }
-test "utils - complex vector copy \n" {
+
+test "utils - copy for complex vector \n" {
+
     inline for (.{f32, f64}) |R| {
         comptime var C: type = Complex(R);
         
@@ -173,7 +172,7 @@ test "utils - complex vector copy \n" {
         x.val[0].im = -1.2;
         x.val[1].im = -5.6;
 
-        try copyVector(C, x, y);
+        try copy(x, y);
 
         try std.testing.expectApproxEqAbs(y.val[0].re, 1.2, eps);
         try std.testing.expectApproxEqAbs(y.val[1].re, 5.6, eps);
@@ -183,7 +182,7 @@ test "utils - complex vector copy \n" {
     }
 }
 
-test "utils - real matrix copy \n" {
+test "utils - copy for real matrix \n" {
     inline for (.{f32, f64}) |R| {
         
         var arena = std.heap.ArenaAllocator.init(std.testing.allocator);
@@ -198,7 +197,7 @@ test "utils - real matrix copy \n" {
         x.val[2] = 3.4;
         x.val[3] = 4.5;
         
-        try copyMatrix(R, x, y);
+        try copy(x, y);
 
         try std.testing.expectApproxEqAbs(y.val[0], 1.2, eps);
         try std.testing.expectApproxEqAbs(y.val[1], 2.3, eps);
@@ -206,7 +205,7 @@ test "utils - real matrix copy \n" {
         try std.testing.expectApproxEqAbs(y.val[3], 4.5, eps);
     }
 }
-test "utils - complex matrix copy \n" {
+test "utils - copy for complex matrix \n" {
     inline for (.{f32, f64}) |R| {
         comptime var C: type = Complex(R);
         
@@ -227,7 +226,7 @@ test "utils - complex matrix copy \n" {
         x.val[2].im = -3.4;
         x.val[3].im = -4.5;
 
-        try copyMatrix(C, x, y);
+        try copy(x, y);
 
         try std.testing.expectApproxEqAbs(y.val[0].re, 1.2, eps);
         try std.testing.expectApproxEqAbs(y.val[1].re, 2.3, eps);
