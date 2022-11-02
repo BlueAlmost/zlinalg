@@ -13,7 +13,7 @@ pub fn build(b: *std.build.Builder) void {
         e_target.build(b);
     }
 
-    const exe_tests = b.addTest("test/main_test.zig");
+    const exe_tests = b.addTest("./main_test.zig");
     exe_tests.setTarget(target);
     exe_tests.setBuildMode(mode);
 
