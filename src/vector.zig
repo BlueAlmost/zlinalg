@@ -157,8 +157,8 @@ test "vector methods fill - real \n" {
         var x = try Vector(R).init(allocator, 2);
         x.fill(1.23);
 
-        try std.testing.expectApproxEqAbs(x.val[0], 1.23, eps);
-        try std.testing.expectApproxEqAbs(x.val[1], 1.23, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.23),x.val[0], eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.23),x.val[1], eps);
     }
 }
 
@@ -174,11 +174,11 @@ test "vector methods fill - complex \n" {
         var x = try Vector(C).init(allocator, 2);
         x.fill( C.init(1.23, 4.56));
 
-        try std.testing.expectApproxEqAbs(x.val[0].re, 1.23, eps);
-        try std.testing.expectApproxEqAbs(x.val[0].im, 4.56, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.23),x.val[0].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 4.56),x.val[0].im, eps);
 
-        try std.testing.expectApproxEqAbs(x.val[1].re, 1.23, eps);
-        try std.testing.expectApproxEqAbs(x.val[1].im, 4.56, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.23),x.val[1].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 4.56),x.val[1].im, eps);
     }
 }
 
@@ -194,8 +194,8 @@ test "vector methods neg - real \n" {
         x.val[1] = 4.56;
         x.neg();
 
-        try std.testing.expectApproxEqAbs(x.val[0], -1.23, eps);
-        try std.testing.expectApproxEqAbs(x.val[1], -4.56, eps);
+        try std.testing.expectApproxEqAbs(@as(R, -1.23),x.val[0], eps);
+        try std.testing.expectApproxEqAbs(@as(R, -4.56),x.val[1], eps);
     }
 }
 
@@ -213,11 +213,11 @@ test "vector methods neg - complex \n" {
         x.val[1] = C.init(7.89, -4.56);
         x.neg();
 
-        try std.testing.expectApproxEqAbs(x.val[0].re, -1.23, eps);
-        try std.testing.expectApproxEqAbs(x.val[0].im, -4.56, eps);
+        try std.testing.expectApproxEqAbs(@as(R, -1.23),x.val[0].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, -4.56),x.val[0].im, eps);
 
-        try std.testing.expectApproxEqAbs(x.val[1].re, -7.89, eps);
-        try std.testing.expectApproxEqAbs(x.val[1].im, 4.56, eps);
+        try std.testing.expectApproxEqAbs(@as(R, -7.89),x.val[1].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 4.56),x.val[1].im, eps);
     }
 }
 
@@ -231,8 +231,8 @@ test "vector methods ones - real \n" {
         var x = try Vector(R).init(allocator, 2);
         x.ones();
 
-        try std.testing.expectApproxEqAbs(x.val[0], 1.0, eps);
-        try std.testing.expectApproxEqAbs(x.val[1], 1.0, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.0),x.val[0], eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.0),x.val[1], eps);
     }
 }
 
@@ -248,11 +248,11 @@ test "vector methods ones - complex \n" {
         var x = try Vector(C).init(allocator, 2);
         x.ones();
 
-        try std.testing.expectApproxEqAbs(x.val[0].re, 1.0, eps);
-        try std.testing.expectApproxEqAbs(x.val[0].im, 0.0, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.0),x.val[0].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 0.0),x.val[0].im, eps);
 
-        try std.testing.expectApproxEqAbs(x.val[1].re, 1.0, eps);
-        try std.testing.expectApproxEqAbs(x.val[1].im, 0.0, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.0),x.val[1].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 0.0),x.val[1].im, eps);
     }
 }
 
@@ -271,8 +271,8 @@ test "vector methods scale - real \n" {
 
         x.scale(alpha);
 
-        try std.testing.expectApproxEqAbs(x.val[0], 2.2, eps);
-        try std.testing.expectApproxEqAbs(x.val[1], 6.6, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 2.2),x.val[0], eps);
+        try std.testing.expectApproxEqAbs(@as(R, 6.6),x.val[1], eps);
     }
 }
 
@@ -292,11 +292,11 @@ test "vector methods scale - complex \n" {
         var alpha: R = 2.0;
         x.scale(alpha);
 
-        try std.testing.expectApproxEqAbs(x.val[0].re, 2.2, eps);
-        try std.testing.expectApproxEqAbs(x.val[0].im, 6.6, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 2.2),x.val[0].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 6.6),x.val[0].im, eps);
 
-        try std.testing.expectApproxEqAbs(x.val[1].re, 2.2, eps);
-        try std.testing.expectApproxEqAbs(x.val[1].im, -6.6, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 2.2),x.val[1].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, -6.6),x.val[1].im, eps);
     }
 }
 
@@ -310,9 +310,9 @@ test "vector methods zeros - real \n" {
         var x = try Vector(R).init(allocator, 3);
         x.zeros();
 
-        try std.testing.expectApproxEqAbs(x.val[0], 0.0, eps);
-        try std.testing.expectApproxEqAbs(x.val[1], 0.0, eps);
-        try std.testing.expectApproxEqAbs(x.val[2], 0.0, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 0.0),x.val[0], eps);
+        try std.testing.expectApproxEqAbs(@as(R, 0.0),x.val[1], eps);
+        try std.testing.expectApproxEqAbs(@as(R, 0.0),x.val[2], eps);
     }
 }
 
@@ -328,13 +328,13 @@ test "vector methods zeros - complex \n" {
         var x = try Vector(C).init(allocator, 3);
         x.zeros();
 
-        try std.testing.expectApproxEqAbs(x.val[0].re, 0.0, eps);
-        try std.testing.expectApproxEqAbs(x.val[0].im, 0.0, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 0.0),x.val[0].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 0.0),x.val[0].im, eps);
 
-        try std.testing.expectApproxEqAbs(x.val[1].re, 0.0, eps);
-        try std.testing.expectApproxEqAbs(x.val[1].im, 0.0, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 0.0),x.val[1].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 0.0),x.val[1].im, eps);
 
-        try std.testing.expectApproxEqAbs(x.val[2].re, 0.0, eps);
-        try std.testing.expectApproxEqAbs(x.val[2].im, 0.0, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 0.0),x.val[2].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 0.0),x.val[2].im, eps);
     }
 }

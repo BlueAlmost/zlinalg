@@ -156,11 +156,11 @@ test "utils - splitify for vector inputs\n" {
 
         try splitify(c, r, i);
 
-        try std.testing.expectApproxEqAbs(r.val[0], 1.2, eps);
-        try std.testing.expectApproxEqAbs(r.val[1], 5.6, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.2),r.val[0], eps);
+        try std.testing.expectApproxEqAbs(@as(R, 5.6),r.val[1], eps);
         
-        try std.testing.expectApproxEqAbs(i.val[0], 3.4, eps);
-        try std.testing.expectApproxEqAbs(i.val[1], 7.8, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 3.4),i.val[0], eps);
+        try std.testing.expectApproxEqAbs(@as(R, 7.8),i.val[1], eps);
     }
 }
 
@@ -184,15 +184,15 @@ test "utils - splitify for matrix inputs\n" {
 
         try splitify(c, r, i);
 
-        try std.testing.expectApproxEqAbs(r.val[0], 1.2, eps);
-        try std.testing.expectApproxEqAbs(r.val[1], 5.6, eps);
-        try std.testing.expectApproxEqAbs(r.val[2], -1.2, eps);
-        try std.testing.expectApproxEqAbs(r.val[3], -5.6, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.2),r.val[0], eps);
+        try std.testing.expectApproxEqAbs(@as(R, 5.6),r.val[1], eps);
+        try std.testing.expectApproxEqAbs(@as(R, -1.2),r.val[2], eps);
+        try std.testing.expectApproxEqAbs(@as(R, -5.6),r.val[3], eps);
         
-        try std.testing.expectApproxEqAbs(i.val[0], 3.4, eps);
-        try std.testing.expectApproxEqAbs(i.val[1], 7.8, eps);
-        try std.testing.expectApproxEqAbs(i.val[2], -3.4, eps);
-        try std.testing.expectApproxEqAbs(i.val[3], -7.8, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 3.4),i.val[0], eps);
+        try std.testing.expectApproxEqAbs(@as(R, 7.8),i.val[1], eps);
+        try std.testing.expectApproxEqAbs(@as(R, -3.4),i.val[2], eps);
+        try std.testing.expectApproxEqAbs(@as(R, -7.8),i.val[3], eps);
     }
 }
 
@@ -218,11 +218,11 @@ test "utils - complexify for vector input\n" {
 
         try complexify(c, r, i);
 
-        try std.testing.expectApproxEqAbs(c.val[0].re, 1.2, eps);
-        try std.testing.expectApproxEqAbs(c.val[1].re, 5.6, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.2),c.val[0].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 5.6),c.val[1].re, eps);
         
-        try std.testing.expectApproxEqAbs(c.val[0].im, 3.4, eps);
-        try std.testing.expectApproxEqAbs(c.val[1].im, 7.8, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 3.4),c.val[0].im, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 7.8),c.val[1].im, eps);
     }
 }
 
@@ -252,15 +252,15 @@ test "utils - complexify for matrix input \n" {
 
         try complexify(c, r, i);
 
-        try std.testing.expectApproxEqAbs(c.val[0].re, 1.2, eps);
-        try std.testing.expectApproxEqAbs(c.val[1].re, 2.3, eps);
-        try std.testing.expectApproxEqAbs(c.val[2].re, 3.4, eps);
-        try std.testing.expectApproxEqAbs(c.val[3].re, 4.5, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.2),c.val[0].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 2.3),c.val[1].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 3.4),c.val[2].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 4.5),c.val[3].re, eps);
         
-        try std.testing.expectApproxEqAbs(c.val[0].im, -1.2, eps);
-        try std.testing.expectApproxEqAbs(c.val[1].im, -2.3, eps);
-        try std.testing.expectApproxEqAbs(c.val[2].im, -3.4, eps);
-        try std.testing.expectApproxEqAbs(c.val[3].im, -4.5, eps);
+        try std.testing.expectApproxEqAbs(@as(R, -1.2),c.val[0].im, eps);
+        try std.testing.expectApproxEqAbs(@as(R, -2.3),c.val[1].im, eps);
+        try std.testing.expectApproxEqAbs(@as(R, -3.4),c.val[2].im, eps);
+        try std.testing.expectApproxEqAbs(@as(R, -4.5),c.val[3].im, eps);
     }
 }
 
@@ -281,8 +281,8 @@ test "utils - copy for real vector \n" {
 
         try copy(x, y);
 
-        try std.testing.expectApproxEqAbs(y.val[0], 1.2, eps);
-        try std.testing.expectApproxEqAbs(y.val[1], 5.6, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.2),y.val[0], eps);
+        try std.testing.expectApproxEqAbs(@as(R, 5.6),y.val[1], eps);
     }
 }
 
@@ -305,11 +305,11 @@ test "utils - copy for complex vector \n" {
 
         try copy(x, y);
 
-        try std.testing.expectApproxEqAbs(y.val[0].re, 1.2, eps);
-        try std.testing.expectApproxEqAbs(y.val[1].re, 5.6, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.2),y.val[0].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 5.6),y.val[1].re, eps);
         
-        try std.testing.expectApproxEqAbs(y.val[0].im, -1.2, eps);
-        try std.testing.expectApproxEqAbs(y.val[1].im, -5.6, eps);
+        try std.testing.expectApproxEqAbs(@as(R, -1.2),y.val[0].im, eps);
+        try std.testing.expectApproxEqAbs(@as(R, -5.6),y.val[1].im, eps);
     }
 }
 
@@ -331,10 +331,10 @@ test "utils - copy for real matrix \n" {
         
         try copy(x, y);
 
-        try std.testing.expectApproxEqAbs(y.val[0], 1.2, eps);
-        try std.testing.expectApproxEqAbs(y.val[1], 2.3, eps);
-        try std.testing.expectApproxEqAbs(y.val[2], 3.4, eps);
-        try std.testing.expectApproxEqAbs(y.val[3], 4.5, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.2),y.val[0], eps);
+        try std.testing.expectApproxEqAbs(@as(R, 2.3),y.val[1], eps);
+        try std.testing.expectApproxEqAbs(@as(R, 3.4),y.val[2], eps);
+        try std.testing.expectApproxEqAbs(@as(R, 4.5),y.val[3], eps);
     }
 }
 test "utils - copy for complex matrix \n" {
@@ -361,15 +361,15 @@ test "utils - copy for complex matrix \n" {
 
         try copy(x, y);
 
-        try std.testing.expectApproxEqAbs(y.val[0].re, 1.2, eps);
-        try std.testing.expectApproxEqAbs(y.val[1].re, 2.3, eps);
-        try std.testing.expectApproxEqAbs(y.val[2].re, 3.4, eps);
-        try std.testing.expectApproxEqAbs(y.val[3].re, 4.5, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 1.2),y.val[0].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 2.3),y.val[1].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 3.4),y.val[2].re, eps);
+        try std.testing.expectApproxEqAbs(@as(R, 4.5),y.val[3].re, eps);
         
-        try std.testing.expectApproxEqAbs(y.val[0].im, -1.2, eps);
-        try std.testing.expectApproxEqAbs(y.val[1].im, -2.3, eps);
-        try std.testing.expectApproxEqAbs(y.val[2].im, -3.4, eps);
-        try std.testing.expectApproxEqAbs(y.val[3].im, -4.5, eps);
+        try std.testing.expectApproxEqAbs(@as(R, -1.2),y.val[0].im, eps);
+        try std.testing.expectApproxEqAbs(@as(R, -2.3),y.val[1].im, eps);
+        try std.testing.expectApproxEqAbs(@as(R, -3.4),y.val[2].im, eps);
+        try std.testing.expectApproxEqAbs(@as(R, -4.5),y.val[3].im, eps);
     }
 }
 
