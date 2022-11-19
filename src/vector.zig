@@ -5,7 +5,7 @@ const Allocator = std.mem.Allocator;
 
 const print = std.debug.print;
 
-pub fn Vector(comptime T: type) type {
+pub fn Vec(comptime T: type) type {
     comptime var U: type = usize;
 
     switch (T) {
@@ -145,14 +145,14 @@ pub fn Vector(comptime T: type) type {
 
 //-----------------------------------------------
 
-test "vector methods fill - real \n" {
+test "vec methods fill - real \n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         var arena = std.heap.ArenaAllocator.init(std.testing.allocator);
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Vector(R).init(allocator, 2);
+        var x = try Vec(R).init(allocator, 2);
         x.fill(1.23);
 
         try std.testing.expectApproxEqAbs(@as(R, 1.23), x.val[0], eps);
@@ -160,7 +160,7 @@ test "vector methods fill - real \n" {
     }
 }
 
-test "vector methods fill - complex \n" {
+test "vec methods fill - complex \n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         comptime var C: type = Complex(R);
@@ -169,7 +169,7 @@ test "vector methods fill - complex \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Vector(C).init(allocator, 2);
+        var x = try Vec(C).init(allocator, 2);
         x.fill(C.init(1.23, 4.56));
 
         try std.testing.expectApproxEqAbs(@as(R, 1.23), x.val[0].re, eps);
@@ -180,14 +180,14 @@ test "vector methods fill - complex \n" {
     }
 }
 
-test "vector methods neg - real \n" {
+test "vec methods neg - real \n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         var arena = std.heap.ArenaAllocator.init(std.testing.allocator);
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Vector(R).init(allocator, 2);
+        var x = try Vec(R).init(allocator, 2);
         x.val[0] = 1.23;
         x.val[1] = 4.56;
         x.neg();
@@ -197,7 +197,7 @@ test "vector methods neg - real \n" {
     }
 }
 
-test "vector methods neg - complex \n" {
+test "vec methods neg - complex \n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         comptime var C: type = Complex(R);
@@ -206,7 +206,7 @@ test "vector methods neg - complex \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Vector(C).init(allocator, 2);
+        var x = try Vec(C).init(allocator, 2);
         x.val[0] = C.init(1.23, 4.56);
         x.val[1] = C.init(7.89, -4.56);
         x.neg();
@@ -219,14 +219,14 @@ test "vector methods neg - complex \n" {
     }
 }
 
-test "vector methods ones - real \n" {
+test "vec methods ones - real \n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         var arena = std.heap.ArenaAllocator.init(std.testing.allocator);
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Vector(R).init(allocator, 2);
+        var x = try Vec(R).init(allocator, 2);
         x.ones();
 
         try std.testing.expectApproxEqAbs(@as(R, 1.0), x.val[0], eps);
@@ -234,7 +234,7 @@ test "vector methods ones - real \n" {
     }
 }
 
-test "vector methods ones - complex \n" {
+test "vec methods ones - complex \n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         comptime var C: type = Complex(R);
@@ -243,7 +243,7 @@ test "vector methods ones - complex \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Vector(C).init(allocator, 2);
+        var x = try Vec(C).init(allocator, 2);
         x.ones();
 
         try std.testing.expectApproxEqAbs(@as(R, 1.0), x.val[0].re, eps);
@@ -254,14 +254,14 @@ test "vector methods ones - complex \n" {
     }
 }
 
-test "vector methods scale - real \n" {
+test "vec methods scale - real \n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         var arena = std.heap.ArenaAllocator.init(std.testing.allocator);
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Vector(R).init(allocator, 2);
+        var x = try Vec(R).init(allocator, 2);
         x.val[0] = 1.1;
         x.val[1] = 3.3;
 
@@ -274,7 +274,7 @@ test "vector methods scale - real \n" {
     }
 }
 
-test "vector methods scale - complex \n" {
+test "vec methods scale - complex \n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         comptime var C: type = Complex(R);
@@ -283,7 +283,7 @@ test "vector methods scale - complex \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Vector(C).init(allocator, 2);
+        var x = try Vec(C).init(allocator, 2);
         x.val[0] = C.init(1.1, 3.3);
         x.val[1] = C.init(1.1, -3.3);
 
@@ -298,14 +298,14 @@ test "vector methods scale - complex \n" {
     }
 }
 
-test "vector methods zeros - real \n" {
+test "vec methods zeros - real \n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         var arena = std.heap.ArenaAllocator.init(std.testing.allocator);
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Vector(R).init(allocator, 3);
+        var x = try Vec(R).init(allocator, 3);
         x.zeros();
 
         try std.testing.expectApproxEqAbs(@as(R, 0.0), x.val[0], eps);
@@ -314,7 +314,7 @@ test "vector methods zeros - real \n" {
     }
 }
 
-test "vector methods zeros - complex \n" {
+test "vec methods zeros - complex \n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         comptime var C: type = Complex(R);
@@ -323,7 +323,7 @@ test "vector methods zeros - complex \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Vector(C).init(allocator, 3);
+        var x = try Vec(C).init(allocator, 3);
         x.zeros();
 
         try std.testing.expectApproxEqAbs(@as(R, 0.0), x.val[0].re, eps);

@@ -3,8 +3,8 @@ const print = std.debug.print;
 const math = std.math;
 const Complex = std.math.complex.Complex;
 
-const Vector = @import("../zlinalg.zig").Vector;
-const Matrix = @import("../zlinalg.zig").Matrix;
+const Vec = @import("../zlinalg.zig").Vec;
+const Mat = @import("../zlinalg.zig").Mat;
 
 pub fn ValueType(comptime T: type) type {
     switch (T) {
@@ -20,10 +20,10 @@ pub fn ValueType(comptime T: type) type {
         []f64, []Complex(f64) => {
             return f64;
         },
-        Vector(f32), Matrix(f32), Vector(Complex(f32)), Matrix(Complex(f32)) => {
+        Vec(f32), Mat(f32), Vec(Complex(f32)), Mat(Complex(f32)) => {
             return f32;
         },
-        Vector(f64), Matrix(f64), Vector(Complex(f64)), Matrix(Complex(f64)) => {
+        Vec(f64), Mat(f64), Vec(Complex(f64)), Mat(Complex(f64)) => {
             return f64;
         },
         else => {
@@ -48,16 +48,16 @@ pub fn splitify(cmp: anytype, re: anytype, im: anytype) !void {
     }
 
     switch (C) {
-        Vector(Complex(VC)) => {
-            if ((R != Vector(VC)) or (I != Vector(VC))) {
+        Vec(Complex(VC)) => {
+            if ((R != Vec(VC)) or (I != Vec(VC))) {
                 @compileError("unexpected input types");
             }
             if ((cmp.val.len != re.val.len) or (cmp.val.len != im.val.len)) {
                 return error.Non_Commensurate_Inputs;
             }
         },
-        Matrix(Complex(VC)) => {
-            if ((R != Matrix(VC)) or (I != Matrix(VC))) {
+        Mat(Complex(VC)) => {
+            if ((R != Mat(VC)) or (I != Mat(VC))) {
                 @compileError("unexpected input types");
             }
             if ((cmp.n_row != re.n_row) or (cmp.n_row != im.n_row)) {
@@ -93,16 +93,16 @@ pub fn complexify(cmp: anytype, re: anytype, im: anytype) !void {
     }
 
     switch (C) {
-        Vector(Complex(VC)) => {
-            if ((R != Vector(VC)) or (I != Vector(VC))) {
+        Vec(Complex(VC)) => {
+            if ((R != Vec(VC)) or (I != Vec(VC))) {
                 @compileError("unexpected input types");
             }
             if ((cmp.val.len != re.val.len) or (cmp.val.len != im.val.len)) {
                 return error.Non_Commensurate_Inputs;
             }
         },
-        Matrix(Complex(VC)) => {
-            if ((R != Matrix(VC)) or (I != Matrix(VC))) {
+        Mat(Complex(VC)) => {
+            if ((R != Mat(VC)) or (I != Mat(VC))) {
                 @compileError("unexpected input types");
             }
             if ((cmp.n_row != re.n_row) or (cmp.n_row != im.n_row)) {
@@ -134,7 +134,7 @@ pub fn copy(src: anytype, dest: anytype) !void {
     }
 
     switch (S) {
-        Vector(VS), Vector(Complex(VS)) => {
+        Vec(VS), Vec(Complex(VS)) => {
             if (src.val.len != dest.val.len) {
                 return error.Non_Commensurate_Inputs;
             }
@@ -142,7 +142,7 @@ pub fn copy(src: anytype, dest: anytype) !void {
                 dest.val[i] = srcval;
             }
         },
-        Matrix(VS), Matrix(Complex(VS)) => {
+        Mat(VS), Mat(Complex(VS)) => {
             if ((src.n_row != dest.n_row) or (src.n_row != dest.n_row)) {
                 return error.Non_Commensurate_Inputs;
             }
@@ -161,7 +161,7 @@ pub fn copy(src: anytype, dest: anytype) !void {
 
 //-----------------------------------------------
 
-test "utils - splitify for vector inputs\n" {
+test "utils - splitify for vec inputs\n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         comptime var C: type = Complex(R);
@@ -170,9 +170,9 @@ test "utils - splitify for vector inputs\n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var c = try Vector(C).init(allocator, 2);
-        var r = try Vector(R).init(allocator, 2);
-        var i = try Vector(R).init(allocator, 2);
+        var c = try Vec(C).init(allocator, 2);
+        var r = try Vec(R).init(allocator, 2);
+        var i = try Vec(R).init(allocator, 2);
         c.val[0] = C.init(1.2, 3.4);
         c.val[1] = C.init(5.6, 7.8);
 
@@ -186,7 +186,7 @@ test "utils - splitify for vector inputs\n" {
     }
 }
 
-test "utils - splitify for matrix inputs\n" {
+test "utils - splitify for mat inputs\n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         comptime var C: type = Complex(R);
@@ -195,9 +195,9 @@ test "utils - splitify for matrix inputs\n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var c = try Matrix(C).init(allocator, 2, 2);
-        var r = try Matrix(R).init(allocator, 2, 2);
-        var i = try Matrix(R).init(allocator, 2, 2);
+        var c = try Mat(C).init(allocator, 2, 2);
+        var r = try Mat(R).init(allocator, 2, 2);
+        var i = try Mat(R).init(allocator, 2, 2);
         c.val[0] = C.init(1.2, 3.4);
         c.val[1] = C.init(5.6, 7.8);
         c.val[2] = C.init(-1.2, -3.4);
@@ -217,7 +217,7 @@ test "utils - splitify for matrix inputs\n" {
     }
 }
 
-test "utils - complexify for vector input\n" {
+test "utils - complexify for vec input\n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         comptime var C: type = Complex(R);
@@ -226,9 +226,9 @@ test "utils - complexify for vector input\n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var r = try Vector(R).init(allocator, 2);
-        var i = try Vector(R).init(allocator, 2);
-        var c = try Vector(C).init(allocator, 2);
+        var r = try Vec(R).init(allocator, 2);
+        var i = try Vec(R).init(allocator, 2);
+        var c = try Vec(C).init(allocator, 2);
 
         r.val[0] = 1.2;
         r.val[1] = 5.6;
@@ -245,7 +245,7 @@ test "utils - complexify for vector input\n" {
     }
 }
 
-test "utils - complexify for matrix input \n" {
+test "utils - complexify for mat input \n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         comptime var C: type = Complex(R);
@@ -254,9 +254,9 @@ test "utils - complexify for matrix input \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var r = try Matrix(R).init(allocator, 2, 2);
-        var i = try Matrix(R).init(allocator, 2, 2);
-        var c = try Matrix(C).init(allocator, 2, 2);
+        var r = try Mat(R).init(allocator, 2, 2);
+        var i = try Mat(R).init(allocator, 2, 2);
+        var c = try Mat(C).init(allocator, 2, 2);
 
         r.val[0] = 1.2;
         r.val[1] = 2.3;
@@ -282,15 +282,15 @@ test "utils - complexify for matrix input \n" {
     }
 }
 
-test "utils - copy for real vector \n" {
+test "utils - copy for real vec \n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         var arena = std.heap.ArenaAllocator.init(std.testing.allocator);
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Vector(R).init(allocator, 2);
-        var y = try Vector(R).init(allocator, 2);
+        var x = try Vec(R).init(allocator, 2);
+        var y = try Vec(R).init(allocator, 2);
 
         x.val[0] = 1.2;
         x.val[1] = 5.6;
@@ -302,7 +302,7 @@ test "utils - copy for real vector \n" {
     }
 }
 
-test "utils - copy for complex vector \n" {
+test "utils - copy for complex vec \n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         comptime var C: type = Complex(R);
@@ -311,8 +311,8 @@ test "utils - copy for complex vector \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Vector(C).init(allocator, 2);
-        var y = try Vector(C).init(allocator, 2);
+        var x = try Vec(C).init(allocator, 2);
+        var y = try Vec(C).init(allocator, 2);
 
         x.val[0].re = 1.2;
         x.val[1].re = 5.6;
@@ -329,15 +329,15 @@ test "utils - copy for complex vector \n" {
     }
 }
 
-test "utils - copy for real matrix \n" {
+test "utils - copy for real mat \n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         var arena = std.heap.ArenaAllocator.init(std.testing.allocator);
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Matrix(R).init(allocator, 2, 2);
-        var y = try Matrix(R).init(allocator, 2, 2);
+        var x = try Mat(R).init(allocator, 2, 2);
+        var y = try Mat(R).init(allocator, 2, 2);
 
         x.val[0] = 1.2;
         x.val[1] = 2.3;
@@ -352,7 +352,7 @@ test "utils - copy for real matrix \n" {
         try std.testing.expectApproxEqAbs(@as(R, 4.5), y.val[3], eps);
     }
 }
-test "utils - copy for complex matrix \n" {
+test "utils - copy for complex mat \n" {
     const eps = 1e-6;
     inline for (.{ f32, f64 }) |R| {
         comptime var C: type = Complex(R);
@@ -361,8 +361,8 @@ test "utils - copy for complex matrix \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Matrix(C).init(allocator, 2, 2);
-        var y = try Matrix(C).init(allocator, 2, 2);
+        var x = try Mat(C).init(allocator, 2, 2);
+        var y = try Mat(C).init(allocator, 2, 2);
 
         x.val[0].re = 1.2;
         x.val[1].re = 2.3;

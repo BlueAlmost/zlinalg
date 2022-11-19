@@ -3,7 +3,7 @@ const Complex = std.math.complex.Complex;
 const Allocator = std.mem.Allocator;
 const print = std.debug.print;
 
-pub fn Matrix(comptime T: type) type {
+pub fn Mat(comptime T: type) type {
     comptime var U: type = usize;
 
     return struct {
@@ -187,7 +187,7 @@ test "matrix methods fill - real \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Matrix(R).init(allocator, 2, 2);
+        var x = try Mat(R).init(allocator, 2, 2);
         x.fill(1.23);
 
         try std.testing.expectApproxEqAbs(@as(R, 1.23), x.val[0], eps);
@@ -206,7 +206,7 @@ test "matrix methods fill - complex \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Matrix(C).init(allocator, 2, 2);
+        var x = try Mat(C).init(allocator, 2, 2);
         x.fill(C.init(1.23, 4.56));
 
         try std.testing.expectApproxEqAbs(@as(R, 1.23), x.val[0].re, eps);
@@ -230,7 +230,7 @@ test "matrix methods neg - real \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Matrix(R).init(allocator, 2, 2);
+        var x = try Mat(R).init(allocator, 2, 2);
         x.val[0] = 0.23;
         x.val[1] = 0.56;
         x.val[2] = 1.23;
@@ -253,7 +253,7 @@ test "matrix methods neg - complex \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Matrix(C).init(allocator, 2, 2);
+        var x = try Mat(C).init(allocator, 2, 2);
         x.val[0] = C.init(1.23, 4.56);
         x.val[1] = C.init(7.89, -4.56);
         x.val[2] = C.init(1.89, 4.56);
@@ -281,7 +281,7 @@ test "matrix methods ones - real \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Matrix(R).init(allocator, 2, 2);
+        var x = try Mat(R).init(allocator, 2, 2);
         x.ones();
 
         try std.testing.expectApproxEqAbs(@as(R, 1.0), x.val[0], eps);
@@ -300,7 +300,7 @@ test "matrix methods ones - complex \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Matrix(C).init(allocator, 2, 2);
+        var x = try Mat(C).init(allocator, 2, 2);
         x.ones();
 
         try std.testing.expectApproxEqAbs(@as(R, 1.0), x.val[0].re, eps);
@@ -324,7 +324,7 @@ test "matrix methods scale - real \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Matrix(R).init(allocator, 2, 2);
+        var x = try Mat(R).init(allocator, 2, 2);
         x.val[0] = 1.1;
         x.val[1] = 2.2;
         x.val[2] = 3.3;
@@ -350,7 +350,7 @@ test "matrix methods scale - complex \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Matrix(C).init(allocator, 2, 2);
+        var x = try Mat(C).init(allocator, 2, 2);
         x.val[0] = C.init(1.1, 3.3);
         x.val[1] = C.init(1.1, -3.3);
         x.val[2] = C.init(2.2, 4.4);
@@ -380,7 +380,7 @@ test "matrix methods zeros - real \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Matrix(R).init(allocator, 2, 2);
+        var x = try Mat(R).init(allocator, 2, 2);
         x.zeros();
 
         try std.testing.expectApproxEqAbs(@as(R, 0.0), x.val[0], eps);
@@ -399,7 +399,7 @@ test "matrix methods zeros - complex \n" {
         defer arena.deinit();
         const allocator = arena.allocator();
 
-        var x = try Matrix(C).init(allocator, 2, 2);
+        var x = try Mat(C).init(allocator, 2, 2);
         x.zeros();
 
         try std.testing.expectApproxEqAbs(@as(R, 0.0), x.val[0].re, eps);

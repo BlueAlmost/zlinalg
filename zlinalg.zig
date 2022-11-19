@@ -1,8 +1,8 @@
 const std = @import("std");
 
 // containers
-pub const Vector = @import("src/vector.zig").Vector; // vector struct implmentation
-pub const Matrix = @import("src/matrix.zig").Matrix; // general matrix struct implmentation
+pub const Vec = @import("src/vector.zig").Vec; // vector struct implmentation
+pub const Mat = @import("src/matrix.zig").Mat; // general matrix struct implmentation
 
 // utilities
 const utils = @import("src/utils.zig");
