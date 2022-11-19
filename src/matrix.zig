@@ -40,7 +40,7 @@ pub fn Mat(comptime T: type) type {
                         self.val[i].im = -self.val[i].im;
                     }
                 },
-                else => @compileError("requested Vector type is not allowed"),
+                else => @compileError("requested Matrix type is not allowed"),
             }
         }
 
