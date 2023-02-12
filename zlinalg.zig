@@ -9,3 +9,8 @@ const utils = @import("src/utils.zig");
 pub const splitify = utils.splitify;
 pub const complexify = utils.complexify;
 pub const copy = utils.copy;
+
+test "everything using decls\n" {
+    std.testing.refAllDecls(@This());
+}
+
